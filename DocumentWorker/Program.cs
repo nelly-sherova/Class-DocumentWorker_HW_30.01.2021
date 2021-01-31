@@ -39,119 +39,28 @@ namespace DocumentWorker
     {
         static void Main(string[] args)
         {
-            string key;
-            int start;
-            int comand;
-            Console.WriteLine("Выберете действие: "); 
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("1 ---> Ввести ключ");
-            Console.WriteLine("2 ---> Войти без ключа");
-            Console.ForegroundColor =  ConsoleColor.White;
-            Console.Write("--->"); int.TryParse(Console.ReadLine(), out start);
-            if (start == 1)
+            const string proKey = "pro";
+            const string expKey = "exp";
+            Console.WriteLine("Введите лицензионный ключ!");
+            string key = Console.ReadLine();
+            DocumentWorker document = new DocumentWorker();
+            switch (key)
             {
-                Console.WriteLine("Введите ключ: "); key = Console.ReadLine();
-                if (key == "pro")
-                {
-                    ProDocumentWorker document = new ProDocumentWorker();
-                    Console.WriteLine("Пожалуйста введите команду для работы с документом: ");
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("1 ---> Открыть документ");
-                    Console.WriteLine("2 ---> Редактировать документ");
-                    Console.WriteLine("3 ---> Сохранить документ");
-                    Console.ForegroundColor =  ConsoleColor.White;
-                    Console.Write("--->"); int.TryParse(Console.ReadLine(), out comand);
-                    if (comand == 1)
-                    {
-                        document.OpenDocument();
-                        Console.WriteLine("Для продолжения введите команду: ");
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.WriteLine("2 ---> Редактировать документ");
-                        Console.WriteLine("3 ---> Сохранить документ");
-                        Console.ForegroundColor =  ConsoleColor.White;
-                        Console.Write("--->"); int.TryParse(Console.ReadLine(), out comand);
-                    }
-                    if (comand == 2)
-                    {
-                        document.EditDocument();
-                        Console.WriteLine("Для продолжения введите команду: ");
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.WriteLine("3 ---> Сохранить документ");
-                        Console.ForegroundColor =  ConsoleColor.White;
-                        Console.Write("--->"); int.TryParse(Console.ReadLine(), out comand);
-                    }
-                    if (comand == 3)
-                    {
-                        document.SaveDocument();
-                    }
-                }
-                else if (key == "exp")
-                {
-                    ExpertDocumentWorker document = new ExpertDocumentWorker();
-                    Console.WriteLine("Пожалуйста введите команду для работы с документом: ");
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("1 ---> Открыть документ");
-                    Console.WriteLine("2 ---> Редактировать документ");
-                    Console.WriteLine("3 ---> Сохранить документ");
-                    Console.ForegroundColor =  ConsoleColor.White;
-                    Console.Write("--->"); int.TryParse(Console.ReadLine(), out comand);
-                    if (comand == 1)
-                    {
-                        document.OpenDocument();
-                        Console.WriteLine("Для продолжения введите команду: ");
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.WriteLine("2 ---> Редактировать документ");
-                        Console.WriteLine("3 ---> Сохранить документ");
-                        Console.ForegroundColor =  ConsoleColor.White;
-                        Console.Write("--->"); int.TryParse(Console.ReadLine(), out comand);
-                    }
-                    if (comand == 2)
-                    {
-                        document.EditDocument();
-                        Console.WriteLine("Для продолжения введите команду: ");
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.WriteLine("3 ---> Сохранить документ");
-                        Console.ForegroundColor =  ConsoleColor.White;
-                        Console.Write("--->"); int.TryParse(Console.ReadLine(), out comand);
-                    }
-                    if (comand == 3)
-                    {
-                    document.SaveDocument();
-                    }
-                }  
+                case proKey: document = new ProDocumentWorker(); break;
+                case expKey: document = new ExpertDocumentWorker(); break;
+                default: document = new DocumentWorker(); break;
             }
-            else 
+            Console.WriteLine("Введите команды для работы с документом: \n1-Открыть документ, \n2-Редактировать документ, \n3-Сохранить, \n4-выход");
+            bool b = true;
+            while (b == true)
             {
-                DocumentWorker document = new DocumentWorker();
-                Console.WriteLine("Пожалуйста введите команду для работы с документом: ");
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("1 ---> Открыть документ");
-                Console.WriteLine("2 ---> Редактировать документ");
-                Console.WriteLine("3 ---> Сохранить документ");
-                Console.ForegroundColor =  ConsoleColor.White;
-                Console.Write("--->"); int.TryParse(Console.ReadLine(), out comand);
-                if (comand == 1)
+                switch (Console.ReadLine())
                 {
-                    document.OpenDocument();
-                    Console.WriteLine("Для продолжения введите команду: ");
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("2 ---> Редактировать документ");
-                    Console.WriteLine("3 ---> Сохранить документ");
-                    Console.ForegroundColor =  ConsoleColor.White;
-                    Console.Write("--->"); int.TryParse(Console.ReadLine(), out comand);
-                }
-                if (comand == 2)
-                {
-                    document.EditDocument();
-                    Console.WriteLine("Для продолжения введите команду: ");
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("3 ---> Сохранить документ");
-                    Console.ForegroundColor =  ConsoleColor.White;
-                    Console.Write("--->"); int.TryParse(Console.ReadLine(), out comand);
-                }
-                if (comand == 3)
-                {
-                    document.SaveDocument();
+                    case "1":  Console.ForegroundColor = ConsoleColor.Green; document.OpenDocument(); Console.ForegroundColor = ConsoleColor.White; break;
+                    case "2": Console.ForegroundColor = ConsoleColor.Green; document.EditDocument(); Console.ForegroundColor = ConsoleColor.White; break;
+                    case "3": Console.ForegroundColor = ConsoleColor.Green; document.SaveDocument(); Console.ForegroundColor = ConsoleColor.White; break;
+                    case "4": b =false; Console.ForegroundColor = ConsoleColor.Red; Console.WriteLine("Выход"); Console.ForegroundColor = ConsoleColor.White; break;
+                    default :Console.ForegroundColor = ConsoleColor.Red; Console.WriteLine("Неправильная команда!"); Console.ForegroundColor = ConsoleColor.White; break;
                 }
             }
         }
